@@ -66,10 +66,12 @@ function internalData( elem, name, data, pvt /* Internal Use Only */ ) {
 
 		// We have to handle DOM nodes and JS objects differently because IE6-7
 		// can't GC object references properly across the DOM-JS boundary
+        //IE6-7数据直接放到dom节点上有内存泄露的风险
 		isNode = elem.nodeType,
 
 		// Only DOM nodes need the global jQuery cache; JS object data is
 		// attached directly to the object so GC can occur automatically
+        //只有dom节点需要全局jQuery.cache,object数据直接放到jQuery.cache里可以让GC更好的回收
 		cache = isNode ? jQuery.cache : elem,
 
 		// Only defining an ID for JS objects if its cache already exists allows
@@ -78,13 +80,15 @@ function internalData( elem, name, data, pvt /* Internal Use Only */ ) {
 
 	// Avoid doing any more work than we need to when trying to get data on an
 	// object that has no data at all
+    //判断是否有无数据，没有数据直接返回
 	if ( (!id || !cache[id] || (!pvt && !cache[id].data)) && data === undefined && typeof name === "string" ) {
 		return;
 	}
 
 	if ( !id ) {
 		// Only DOM nodes need a new unique ID for each element since their data
-		// ends up in the global cache
+        // ends up in the global cache
+        //为每个dom节点的internalKey属性生成 一个guid
 		if ( isNode ) {
 			id = elem[ internalKey ] = deletedIds.pop() || jQuery.guid++;
 		} else {
@@ -95,6 +99,7 @@ function internalData( elem, name, data, pvt /* Internal Use Only */ ) {
 	if ( !cache[ id ] ) {
 		// Avoid exposing jQuery metadata on plain JS objects when the object
 		// is serialized using JSON.stringify
+        //toJSON避免数据被格式化
 		cache[ id ] = isNode ? {} : { toJSON: jQuery.noop };
 	}
 
@@ -113,6 +118,7 @@ function internalData( elem, name, data, pvt /* Internal Use Only */ ) {
 	// jQuery data() is stored in a separate object inside the object's internal data
 	// cache in order to avoid key collisions between internal data and user-defined
 	// data.
+    //jQuery data() 存储在一个单独的数据对象(cache[id].data)在对象的内部数据缓存,以避免碰撞内部数据和用户定义的关键
 	if ( !pvt ) {
 		if ( !thisCache.data ) {
 			thisCache.data = {};
