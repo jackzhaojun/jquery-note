@@ -299,6 +299,7 @@ jQuery.fn.extend({
 
 						// Support: IE11+
 						// The attrs elements can be null (#14894)
+                        //IE11私有数据-ms-非data-
 						if ( attrs[ i ] ) {
 							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
