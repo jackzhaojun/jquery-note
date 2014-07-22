@@ -11,6 +11,7 @@ var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 function dataAttr( elem, key, data ) {
 	// If nothing was found internally, try to fetch any
 	// data from the HTML5 data-* attribute
+    //如果沒有发现内部数据，试图获取HTML5 data-*属性
 	if ( data === undefined && elem.nodeType === 1 ) {
 
 		var name = "data-" + key.replace( rmultiDash, "-$1" ).toLowerCase();
@@ -23,12 +24,14 @@ function dataAttr( elem, key, data ) {
 					data === "false" ? false :
 					data === "null" ? null :
 					// Only convert to a number if it doesn't change the string
+                    //数字字符转换为number类型
 					+data + "" === data ? +data :
 					rbrace.test( data ) ? jQuery.parseJSON( data ) :
 					data;
 			} catch( e ) {}
 
 			// Make sure we set the data so it isn't changed later
+            //
 			jQuery.data( elem, key, data );
 
 		} else {
@@ -327,6 +330,7 @@ jQuery.fn.extend({
 
 			// Gets one value
 			// Try to fetch any internally stored data first
+            //首先尝试获取内部data-*数据
 			elem ? dataAttr( elem, key, jQuery.data( elem, key ) ) : undefined;
 	},
 
