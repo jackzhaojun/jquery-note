@@ -7,6 +7,7 @@ define([
 var optionsCache = {};
 
 // Convert String-formatted options into Object-formatted ones and store in cache
+//字符串格式选项转换成Object-formatted并存储在缓存中
 function createOptions( options ) {
 	var object = optionsCache[ options ] = {};
 	jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {
@@ -46,20 +47,28 @@ jQuery.Callbacks = function( options ) {
 		jQuery.extend( {}, options );
 
 	var // Flag to know if list is currently firing
+        //如果列表是当前就绪中则标记
 		firing,
 		// Last fire value (for non-forgettable lists)
+        //最后开启的值（循环非可忘记的列表）
 		memory,
 		// Flag to know if list was already fired
+        //标记列表是已经就绪的
 		fired,
 		// End of the loop when firing
+        //当就绪时结束循环
 		firingLength,
 		// Index of currently firing callback (modified by remove if needed)
+        //当前就绪回调指数(如果需要删除之前修改)
 		firingIndex,
 		// First callback to fire (used internally by add and fireWith)
+        //第一次回调就绪(通过添加和fireWith内部使用)
 		firingStart,
 		// Actual callback list
+        //实际回调列表
 		list = [],
 		// Stack of fire calls for repeatable lists
+        //
 		stack = !options.once && [],
 		// Fire callbacks
 		fire = function( data ) {
