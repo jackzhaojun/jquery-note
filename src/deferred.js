@@ -30,6 +30,7 @@ jQuery.extend({
 							// deferred[ done | fail | progress ] for forwarding actions to newDefer
 							deferred[ tuple[1] ](function() {
 								var returned = fn && fn.apply( this, arguments );
+								//如果returned 是一个deferred对象，newDefer的触发交由returned控制。
 								if ( returned && jQuery.isFunction( returned.promise ) ) {
 									returned.promise()
 										.done( newDefer.resolve )
