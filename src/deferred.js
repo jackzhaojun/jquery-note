@@ -74,6 +74,7 @@ jQuery.extend({
 			}
 
 			// deferred[ resolve | reject | notify ]
+			//resolve, reject, notify 三个改变状态的函数分别用不同的三个$.Callbacks()来管理
 			deferred[ tuple[0] ] = function() {
 				deferred[ tuple[0] + "With" ]( this === deferred ? promise : this, arguments );
 				return this;
