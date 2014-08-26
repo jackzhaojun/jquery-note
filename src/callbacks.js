@@ -50,13 +50,13 @@ jQuery.Callbacks = function( options ) {
         //如果列表是当前触发中则标记
 		firing,
 		// Last fire value (for non-forgettable lists)
-        //最后开启的值（循环非可忘记的列表）
+        //最后调用fire是传递的值
 		memory,
 		// Flag to know if list was already fired
         //标记列表是已经触发的
 		fired,
 		// End of the loop when firing
-        //当触发时结束循环
+        //当触发时循环的次数（实际list的长度）
 		firingLength,
 		// Index of currently firing callback (modified by remove if needed)
         //当前就绪回调指数(如果需要删除之前修改)
@@ -87,12 +87,15 @@ jQuery.Callbacks = function( options ) {
 			firing = false;
 			if ( list ) {
 				if ( stack ) {
+                    // memory规则
 					if ( stack.length ) {
 						fire( stack.shift() );
 					}
 				} else if ( memory ) {
+                    //如果是memory+once规则 每次触发回调后清空list
 					list = [];
 				} else {
+                    //once 规则
 					self.disable();
 				}
 			}
@@ -113,13 +116,14 @@ jQuery.Callbacks = function( options ) {
 								}
 							} else if ( arg && arg.length && type !== "string" ) {
 								// Inspect recursively
+                                //递归检测 （如何是数组递归调用）
 								add( arg );
 							}
 						});
 					})( arguments );
 					// Do we need to add the callbacks to the
 					// current firing batch?
-                    //我们需要添加回调到当前触发的一批
+                    //我们需要添加回调到当前触发的一批（多线程的情况下，如果添加一个回调的时候状态还是执行中就改变当前回调list的长度）
 					if ( firing ) {
 						firingLength = list.length;
 					// With memory, if we're not firing then

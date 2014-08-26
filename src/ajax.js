@@ -25,20 +25,25 @@ var
 
 	/* Prefilters
 	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
-	 * 2) These are called:
-	 *    - BEFORE asking for a transport
-	 *    - AFTER param serialization (s.data is a string if s.processData is true)
-	 * 3) key is the dataType
-	 * 4) the catchall symbol "*" can be used
+	 * //它们是有用的介绍自定义数据类型
+	 * 2) These are called: 这些被称为
+	 *    - BEFORE asking for a transport 之前要求传输
+	 *    - AFTER param serialization (s.data is a string if s.processData is true) //之后序列化参数
+	 * 3) key is the dataType //key是一个数据类型
+	 * 4) the catchall symbol "*" can be used //可以用*通用符号
 	 * 5) execution will start with transport dataType and THEN continue down to "*" if needed
+	 *    执行将开始传输的数据类型，如果需要然后继续直到 *
 	 */
+    //前置过滤器
 	prefilters = {},
 
-	/* Transports bindings
-	 * 1) key is the dataType
-	 * 2) the catchall symbol "*" can be used
+	/* Transports bindings 捆绑传输协议
+	 * 1) key is the dataType //key是一个数据类型
+	 * 2) the catchall symbol "*" can be used  //可以用*通用符号
 	 * 3) selection will start with transport dataType and THEN go to "*" if needed
+	 *    选择将开始传输的数据类型，如果需要然后到 *
 	 */
+    //请求分发器
 	transports = {},
 
 	// Avoid comment-prolog char sequence (#10098); must appease lint and evade compression
@@ -46,11 +51,13 @@ var
 
 // #8138, IE may throw an exception when accessing
 // a field from window.location if document.domain has been set
+    //当IE设置document.domain后，获取location.href会报错
 try {
 	ajaxLocation = location.href;
 } catch( e ) {
 	// Use the href attribute of an A element
 	// since IE will modify it given document.location
+    //使用一个a元素的href属性，因为IE将修改它给document.location
 	ajaxLocation = document.createElement( "a" );
 	ajaxLocation.href = "";
 	ajaxLocation = ajaxLocation.href;
