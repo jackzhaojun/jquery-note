@@ -30,6 +30,7 @@ jQuery.extend({
 							// deferred[ done | fail | progress ] for forwarding actions to newDefer
 							deferred[ tuple[1] ](function() {
 								var returned = fn && fn.apply( this, arguments );
+								//如果returned 是一个deferred对象，newDefer的触发交由returned控制。
 								if ( returned && jQuery.isFunction( returned.promise ) ) {
 									returned.promise()
 										.done( newDefer.resolve )
@@ -73,6 +74,7 @@ jQuery.extend({
 			}
 
 			// deferred[ resolve | reject | notify ]
+			//resolve, reject, notify 三个改变状态的函数分别用不同的三个$.Callbacks()来管理
 			deferred[ tuple[0] ] = function() {
 				deferred[ tuple[0] + "With" ]( this === deferred ? promise : this, arguments );
 				return this;
