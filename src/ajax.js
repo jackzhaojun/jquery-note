@@ -67,6 +67,7 @@ try {
 ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
+//添加基础构造到前置过滤器或请求分发器
 function addToPrefiltersOrTransports( structure ) {
 
 	// dataTypeExpression is optional and defaults to "*"
@@ -99,6 +100,7 @@ function addToPrefiltersOrTransports( structure ) {
 }
 
 // Base inspection function for prefilters and transports
+//检查关于prefilters或transports基础过滤函数
 function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
 
 	var inspected = {},
@@ -160,6 +162,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	}
 
 	// Check if we're dealing with a known content-type
+    //检查如果我们处理一个已知的内容类型
 	if ( ct ) {
 		for ( type in contents ) {
 			if ( contents[ type ] && contents[ type ].test( ct ) ) {
@@ -170,6 +173,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	}
 
 	// Check to see if we have a response for the expected dataType
+    //看看我们有响应预期的数据类型
 	if ( dataTypes[ 0 ] in responses ) {
 		finalDataType = dataTypes[ 0 ];
 	} else {
@@ -190,6 +194,9 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 	// If we found a dataType
 	// We add the dataType to the list if needed
 	// and return the corresponding response
+    //如果我们发现一个数据类型
+    //如果需要,我们将数据类型添加到列表
+    //并返回相应的响应
 	if ( finalDataType ) {
 		if ( finalDataType !== dataTypes[ 0 ] ) {
 			dataTypes.unshift( finalDataType );
@@ -200,6 +207,8 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 
 /* Chain conversions given the request and the original response
  * Also sets the responseXXX fields on the jqXHR instance
+ * 链转换请求和原始的响应
+ * 还设置responseXXX jqXHR实例字段
  */
 function ajaxConvert( s, response, jqXHR, isSuccess ) {
 	var conv2, current, conv, tmp, prev,
@@ -208,6 +217,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		dataTypes = s.dataTypes.slice();
 
 	// Create converters map with lowercased keys
+    //创建一个小写key的map转换器
 	if ( dataTypes[ 1 ] ) {
 		for ( conv in s.converters ) {
 			converters[ conv.toLowerCase() ] = s.converters[ conv ];
@@ -217,6 +227,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 	current = dataTypes.shift();
 
 	// Convert to each sequential dataType
+    //每个连续的数据类型转换
 	while ( current ) {
 
 		if ( s.responseFields[ current ] ) {
@@ -224,6 +235,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 		}
 
 		// Apply the dataFilter if provided
+        //应用dataFilter如果提供
 		if ( !prev && isSuccess && s.dataFilter ) {
 			response = s.dataFilter( response, s.dataType );
 		}
@@ -397,8 +409,10 @@ jQuery.extend({
 		options = options || {};
 
 		var // Cross-domain detection vars
+            //跨域检测
 			parts,
 			// Loop variable
+            //循环变量
 			i,
 			// URL without anti-cache param
 			cacheURL,
