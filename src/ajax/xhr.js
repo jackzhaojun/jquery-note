@@ -63,6 +63,7 @@ if ( xhrSupported ) {
 					xhr.open( options.type, options.url, options.async, options.username, options.password );
 
 					// Apply custom fields if provided
+                    //应用定制
 					if ( options.xhrFields ) {
 						for ( i in options.xhrFields ) {
 							xhr[ i ] = options.xhrFields[ i ];
@@ -70,6 +71,7 @@ if ( xhrSupported ) {
 					}
 
 					// Override mime type if needed
+                    //如果需要覆盖mime类型
 					if ( options.mimeType && xhr.overrideMimeType ) {
 						xhr.overrideMimeType( options.mimeType );
 					}
@@ -123,6 +125,7 @@ if ( xhrSupported ) {
 
 								// Support: IE<10
 								// Accessing binary-data responseText throws an exception
+                                //访问二进制数据responseText将抛出一个异常
 								// (#11426)
 								if ( typeof xhr.responseText === "string" ) {
 									responses.text = xhr.responseText;
@@ -130,15 +133,18 @@ if ( xhrSupported ) {
 
 								// Firefox throws an exception when accessing
 								// statusText for faulty cross-domain requests
+                                // Firefox访问时抛出一个异常
+                                //statusText错误的跨域请求
 								try {
 									statusText = xhr.statusText;
 								} catch( e ) {
 									// We normalize with Webkit giving an empty statusText
+                                    //我们用webkit给一个空statusTest正常化
 									statusText = "";
 								}
 
 								// Filter status for non standard behaviors
-
+                                //过滤非标准状态的行为
 								// If the request is local and we have data: assume a success
 								// (success with no data won't get notified, that's the best we
 								// can do given current implementations)

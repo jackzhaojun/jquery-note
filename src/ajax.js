@@ -129,6 +129,8 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 
 // A special extend for ajax options
 // that takes "flat" options (not to be deep extended)
+//特别扩展ajax选项
+//接受“平”选项(不扩展)
 // Fixes #9887
 function ajaxExtend( target, src ) {
 	var deep, key,
@@ -149,6 +151,10 @@ function ajaxExtend( target, src ) {
 /* Handles responses to an ajax request:
  * - finds the right dataType (mediates between content-type and expected dataType)
  * - returns the corresponding response
+ */
+/* 处理响应ajax请求:
+ * 找到正确的数据类型(介于内容类型和预期的数据类型)
+ * 返回相应的响应
  */
 function ajaxHandleResponses( s, jqXHR, responses ) {
 	var firstDataType, ct, finalDataType, type,
@@ -555,6 +561,7 @@ jQuery.extend({
 		inspectPrefiltersOrTransports( prefilters, s, options, jqXHR );
 
 		// If request was aborted inside a prefilter, stop there
+        //如果请求中止在预滤器,就此止步
 		if ( state === 2 ) {
 			return jqXHR;
 		}
