@@ -67,7 +67,8 @@ try {
 ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
-//添加基础构造到前置过滤器或请求分发器
+//添加基础构造到前置过滤器或请求分发器，前置过滤器和请求分发器都是针对dataType来操作的。 前置过滤器如果返回一个dataType
+// 则把dataType添加到添加到dataTypes中， 请求分发器则直接返回一个带send方法和abort方法的对象
 function addToPrefiltersOrTransports( structure ) {
 
 	// dataTypeExpression is optional and defaults to "*"
@@ -100,22 +101,23 @@ function addToPrefiltersOrTransports( structure ) {
 }
 
 // Base inspection function for prefilters and transports
-//检查关于prefilters或transports基础过滤函数
+//获取prefilters或transports的基础过滤函数 （ajax初始化阶段会添加很多过滤函数，最后我们要通过dataType来决定需要什么样的过滤函数）
 function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
 
 	var inspected = {},
-		seekingTransport = ( structure === transports );
+		seekingTransport = ( structure === transports );   //判断获取前置过滤器还是请求过滤器
 
 	function inspect( dataType ) {
 		var selected;
 		inspected[ dataType ] = true;
 		jQuery.each( structure[ dataType ] || [], function( _, prefilterOrFactory ) {
 			var dataTypeOrTransport = prefilterOrFactory( options, originalOptions, jqXHR );
+            //如果是前置过滤器，并且过滤器有返回dataType，则把dataType放到dataTypes继续递归inspect直到前置过滤器没有返回值
 			if ( typeof dataTypeOrTransport === "string" && !seekingTransport && !inspected[ dataTypeOrTransport ] ) {
 				options.dataTypes.unshift( dataTypeOrTransport );
 				inspect( dataTypeOrTransport );
 				return false;
-			} else if ( seekingTransport ) {
+			} else if ( seekingTransport ) {        //如果是请求分发器直接返回请求分发对象
 				return !( selected = dataTypeOrTransport );
 			}
 		});
