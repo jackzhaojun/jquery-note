@@ -153,7 +153,7 @@ function ajaxExtend( target, src ) {
  * - returns the corresponding response
  */
 /* 处理响应ajax请求:
- * 找到正确的数据类型(介于内容类型和预期的数据类型)
+ * 找到正确的数据类型(介于内容类型和预期的数据类型 eg: response.text 数据类型为text response.xml 数据类型为xml)
  * 返回相应的响应
  */
 function ajaxHandleResponses( s, jqXHR, responses ) {
@@ -186,6 +186,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 		finalDataType = dataTypes[ 0 ];
 	} else {
 		// Try convertible dataTypes
+        //正常情况responses = {text: ...} 所以finalDataType = 'text'
 		for ( type in responses ) {
 			if ( !dataTypes[ 0 ] || s.converters[ type + " " + dataTypes[0] ] ) {
 				finalDataType = type;
@@ -207,6 +208,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
     //并返回相应的响应
 	if ( finalDataType ) {
 		if ( finalDataType !== dataTypes[ 0 ] ) {
+            //一般情况 dataTypes = ['text', dataType]
 			dataTypes.unshift( finalDataType );
 		}
 		return responses[ finalDataType ];
@@ -372,6 +374,7 @@ jQuery.extend({
 			"text html": true,
 
 			// Evaluate text as a json expression
+            //评估一个文本作为json表达式 eg: response.text  content-type:json
 			"text json": jQuery.parseJSON,
 
 			// Parse text as xml
