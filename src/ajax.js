@@ -69,6 +69,7 @@ ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
 //添加基础构造到前置过滤器或请求分发器，前置过滤器和请求分发器都是针对dataType来操作的。 前置过滤器如果返回一个dataType
 // 则把dataType添加到添加到dataTypes中， 请求分发器则直接返回一个带send方法和abort方法的对象
+
 function addToPrefiltersOrTransports( structure ) {
 
 	// dataTypeExpression is optional and defaults to "*"
