@@ -51,6 +51,7 @@ jQuery.event = {
 		}
 
 		// Caller can pass in an object of custom data in lieu of the handler
+        //调用者可以通过自定义数据的对象代替的处理程序
 		if ( handler.handler ) {
 			handleObjIn = handler;
 			handler = handleObjIn.handler;
@@ -58,11 +59,13 @@ jQuery.event = {
 		}
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
+        //确保处理程序有一个惟一的ID,用于查找/删除它
 		if ( !handler.guid ) {
 			handler.guid = jQuery.guid++;
 		}
 
 		// Init the element's event structure and main handler, if this is the first
+        //初始化元素的事件结构和主要处理程序,如果这是第一次
 		if ( !(events = elemData.events) ) {
 			events = elemData.events = {};
 		}
@@ -70,6 +73,7 @@ jQuery.event = {
 			eventHandle = elemData.handle = function( e ) {
 				// Discard the second event of a jQuery.event.trigger() and
 				// when an event is called after a page has unloaded
+                /// /丢弃的第二个事件jQuery.event.trigger()和当一个事件在一个页面卸载后调用
 				return typeof jQuery !== strundefined && (!e || jQuery.event.triggered !== e.type) ?
 					jQuery.event.dispatch.apply( eventHandle.elem, arguments ) :
 					undefined;
