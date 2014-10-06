@@ -79,6 +79,7 @@ jQuery.event = {
 					undefined;
 			};
 			// Add elem as a property of the handle fn to prevent a memory leak with IE non-native events
+            //添加elem屬性到处理函数防止内存泄漏,即非事件
 			eventHandle.elem = elem;
 		}
 
@@ -96,12 +97,15 @@ jQuery.event = {
 			}
 
 			// If event changes its type, use the special event handlers for the changed type
+            //如果事件是其类型,使用特殊的事件类型处理程序
 			special = jQuery.event.special[ type ] || {};
 
 			// If selector defined, determine special event api type, otherwise given type
+            //如果选择器定义,确定特殊事件api类型,否则给定类型
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
+            //更新特殊基于新重置类型
 			special = jQuery.event.special[ type ] || {};
 
 			// handleObj is passed to all event handlers
@@ -117,11 +121,13 @@ jQuery.event = {
 			}, handleObjIn );
 
 			// Init the event handler queue if we're the first
+            //初始化事件处理程序队列，如果我们是第一个。
 			if ( !(handlers = events[ type ]) ) {
 				handlers = events[ type ] = [];
 				handlers.delegateCount = 0;
 
 				// Only use addEventListener/attachEvent if the special events handler returns false
+                //只使用addEventListener / attachEvent如果特殊事件处理程序返回false
 				if ( !special.setup || special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
 					// Bind the global event handler to the element
 					if ( elem.addEventListener ) {
@@ -142,17 +148,20 @@ jQuery.event = {
 			}
 
 			// Add to the element's handler list, delegates in front
+            //添加到元素的处理程序列表,delegates处理程序放到前面
 			if ( selector ) {
 				handlers.splice( handlers.delegateCount++, 0, handleObj );
-			} else {
+            } else {
 				handlers.push( handleObj );
 			}
 
 			// Keep track of which events have ever been used, for event optimization
+            //跟踪事件曾被使用,对于事件的优化
 			jQuery.event.global[ type ] = true;
 		}
 
 		// Nullify elem to prevent memory leaks in IE
+        //取消elem防止内存泄漏在IE中
 		elem = null;
 	},
 
@@ -380,6 +389,7 @@ jQuery.event = {
 			special = jQuery.event.special[ event.type ] || {};
 
 		// Use the fix-ed jQuery.Event rather than the (read-only) native event
+        //使用加工过后的jQuery.Event而不是(只读)本地事件
 		args[0] = event;
 		event.delegateTarget = this;
 
@@ -392,6 +402,7 @@ jQuery.event = {
 		handlerQueue = jQuery.event.handlers.call( this, event, handlers );
 
 		// Run delegates first; they may want to stop propagation beneath us
+        //代表第一次运行;他们可能想要停止传播。
 		i = 0;
 		while ( (matched = handlerQueue[ i++ ]) && !event.isPropagationStopped() ) {
 			event.currentTarget = matched.elem;
@@ -444,6 +455,7 @@ jQuery.event = {
 
 				// Don't check non-elements (#13208)
 				// Don't process clicks on disabled elements (#6911, #8165, #11382, #11764)
+                //不加工点击或者禁用的元素
 				if ( cur.nodeType === 1 && (cur.disabled !== true || event.type !== "click") ) {
 					matches = [];
 					for ( i = 0; i < delegateCount; i++ ) {
@@ -482,6 +494,7 @@ jQuery.event = {
 		}
 
 		// Create a writable copy of the event object and normalize some properties
+        //创建一个可写事件对象的副本和规范化的一些性质
 		var i, prop, copy,
 			type = event.type,
 			originalEvent = event,
