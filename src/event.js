@@ -105,7 +105,7 @@ jQuery.event = {
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
-            //更新特殊基于新重置类型
+            //基于重新设置的来更新专用类型
 			special = jQuery.event.special[ type ] || {};
 
 			// handleObj is passed to all event handlers
