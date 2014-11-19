@@ -490,7 +490,7 @@ jQuery.event = {
 		return handlerQueue;
 	},
 
-    //加工一个标准的jQuery.event对象
+    //加工一个jQuery.event对象
 	fix: function( event ) {
 		if ( event[ jQuery.expando ] ) {
 			return event;
