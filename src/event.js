@@ -59,7 +59,7 @@ jQuery.event = {
 		}
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
-        //确保处理程序有一个惟一的ID,用于查找/删除它
+        //确保处理程序有一个惟一的ID, 以后查找/删除它
 		if ( !handler.guid ) {
 			handler.guid = jQuery.guid++;
 		}
@@ -101,7 +101,7 @@ jQuery.event = {
 			special = jQuery.event.special[ type ] || {};
 
 			// If selector defined, determine special event api type, otherwise given type
-            //如果选择器定义,确定特殊事件api类型,否则给定类型
+            //如果选择器定义,判定为特殊事件api类型，否则为定义的type
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
@@ -109,6 +109,7 @@ jQuery.event = {
 			special = jQuery.event.special[ type ] || {};
 
 			// handleObj is passed to all event handlers
+            //handleObj 是所有传过来的handlers
 			handleObj = jQuery.extend({
 				type: type,
 				origType: origType,
@@ -139,6 +140,7 @@ jQuery.event = {
 				}
 			}
 
+            //这里是干嘛用的？ 特殊事件处理？
 			if ( special.add ) {
 				special.add.call( elem, handleObj );
 
@@ -488,13 +490,14 @@ jQuery.event = {
 		return handlerQueue;
 	},
 
+    //加工一个标准的jQuery.event对象
 	fix: function( event ) {
 		if ( event[ jQuery.expando ] ) {
 			return event;
 		}
 
 		// Create a writable copy of the event object and normalize some properties
-        //创建一个可写事件对象的副本和规范化的一些性质
+        //创建一个可写事件对象的副本和规范化的一些属性
 		var i, prop, copy,
 			type = event.type,
 			originalEvent = event,
@@ -536,6 +539,7 @@ jQuery.event = {
 	},
 
 	// Includes some event props shared by KeyEvent and MouseEvent
+    //依据KeyEvent,MouseEvent引入一些事件支撑共享
 	props: "altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),
 
 	fixHooks: {},
@@ -641,7 +645,7 @@ jQuery.event = {
 			}
 		}
 	},
-
+    //事件模拟
 	simulate: function( type, elem, event, bubble ) {
 		// Piggyback on a donor event to simulate a different one.
 		// Fake originalEvent to avoid donor's stopPropagation, but if the
